@@ -33,6 +33,24 @@ export default async function ProjectPage(props: PageProps<"/projects/[projectId
             Créé le {formatDate(project.createdAt)} · {formatTaskCount(tasks.length)}
           </p>
           {project.description && <p className="mt-3 whitespace-pre-line break-words">{project.description}</p>}
+
+          {/* Progress bar showing the percentage of tasks that are done. */}
+          {
+            tasks.length > 0 && (
+              <>
+                <p> 
+                  <strong className="font-semibold">{tasks.filter((task) => task.status === "Done").length}</strong> /{" "}
+                  <strong className="font-semibold">{tasks.length}</strong> tâches terminées
+                </p>
+                <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-border">
+                  <div
+                    className="h-full bg-status-done-bg transition-all"
+                    style={{ width: `${(tasks.filter((task) => task.status === "Done").length / tasks.length) * 100}%` }}
+                  />
+                </div>
+              </>
+            )
+          }
         </div>
         <div className="flex flex-wrap gap-3">
           <ButtonLink href={`/projects/${project.id}/edit`} variant="secondary">

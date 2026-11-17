@@ -6,8 +6,8 @@ using TaskTracker.Api.Entities;
 
 namespace TaskTracker.Api.Controllers;
 
-// Lister et créer passent par le projet (/api/projects/{id}/tasks) ;
-// lire, modifier et supprimer une tâche passent par son propre identifiant (/api/tasks/{id}).
+// Listing and creating go through the project (/api/projects/{id}/tasks);
+// reading, updating and deleting a task go through its own id (/api/tasks/{id}).
 [ApiController]
 [Route("api")]
 public class TasksController(AppDbContext db) : ControllerBase

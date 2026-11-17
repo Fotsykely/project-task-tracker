@@ -10,7 +10,7 @@ namespace TaskTracker.Api.Controllers;
 [Route("api/projects")]
 public class ProjectsController(AppDbContext db) : ControllerBase
 {
-    // Page d'accueil : le nombre de tâches est calculé par la base dans la même requête SQL.
+    // Home page: the task count is computed by the database in the same SQL query.
     [HttpGet]
     public async Task<ActionResult<List<ProjectSummaryDto>>> GetAll(CancellationToken cancellationToken)
     {
@@ -52,7 +52,7 @@ public class ProjectsController(AppDbContext db) : ControllerBase
         return ToDto(project);
     }
 
-    // Les tâches du projet sont supprimées par la base (clé étrangère en cascade).
+    // The project's tasks are removed by the database (cascading foreign key).
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Delete(int id, CancellationToken cancellationToken)
     {

@@ -3,7 +3,7 @@ using TaskTracker.Api.Entities;
 
 namespace TaskTracker.Api.Dtos;
 
-// Corps des requêtes POST et PUT d'une tâche.
+// Request body for POST and PUT on a task.
 public class TaskRequestDto
 {
     private string? _title;
@@ -16,11 +16,11 @@ public class TaskRequestDto
         set => _title = value?.Trim();
     }
 
-    // Envoyé en texte : "Todo", "InProgress" ou "Done". Sans valeur, une nouvelle tâche est "Todo".
+    // Sent as text: "Todo", "InProgress" or "Done". Defaults to "Todo" when omitted.
     [EnumDataType(typeof(ProjectTaskStatus), ErrorMessage = "Le statut est invalide.")]
     public ProjectTaskStatus Status { get; set; } = ProjectTaskStatus.Todo;
 
-    // Facultative, au format "2026-12-31".
+    // Optional, formatted as "2026-12-31".
     public DateOnly? DueDate { get; set; }
 }
 

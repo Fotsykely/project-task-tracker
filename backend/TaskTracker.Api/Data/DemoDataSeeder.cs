@@ -5,7 +5,7 @@ namespace TaskTracker.Api.Data;
 
 public static class DemoDataSeeder
 {
-    // N'insère rien si la base contient déjà des projets : relancer l'API ne crée pas de doublons.
+    // Inserts nothing when the database already has projects: restarting the API never creates duplicates.
     public static async Task SeedAsync(AppDbContext db, CancellationToken cancellationToken = default)
     {
         if (await db.Projects.AnyAsync(cancellationToken))

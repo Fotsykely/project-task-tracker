@@ -3,8 +3,8 @@ using TaskTracker.Api.Entities;
 
 namespace TaskTracker.Api.Dtos;
 
-// Corps des requêtes POST et PUT. Les attributs de validation sont lus automatiquement
-// par [ApiController] : une saisie invalide renvoie un 400 avec les messages par champ.
+// Request body for POST and PUT. The validation attributes are picked up automatically
+// by [ApiController]: invalid input returns a 400 with one message list per field.
 public class ProjectRequestDto
 {
     private string? _name;
@@ -16,7 +16,7 @@ public class ProjectRequestDto
     public string? Name
     {
         get => _name;
-        set => _name = value?.Trim(); // " ab " compte pour 2 caractères, pas 4
+        set => _name = value?.Trim(); // " ab " counts as 2 characters, not 4
     }
 
     [StringLength(Project.DescriptionMaxLength,
@@ -28,8 +28,8 @@ public class ProjectRequestDto
     }
 }
 
-// Réponse pour la page d'accueil : un projet et son nombre de tâches.
+// Response for the home page: a project and its number of tasks.
 public record ProjectSummaryDto(int Id, string Name, string? Description, DateTime CreatedAt, int TaskCount);
 
-// Réponse pour un seul projet.
+// Response for a single project.
 public record ProjectDto(int Id, string Name, string? Description, DateTime CreatedAt);

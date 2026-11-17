@@ -4,11 +4,11 @@ using TaskTracker.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// La chaîne de connexion n'est jamais dans le code : elle vient des user-secrets (développement)
-// ou de la variable d'environnement ConnectionStrings__Default. Voir le README.
+// The connection string is never in the source code: it comes from user secrets (development)
+// or from the ConnectionStrings__Default environment variable. See the README.
 var connectionString = builder.Configuration.GetConnectionString("Default")
     ?? throw new InvalidOperationException(
-        "Chaîne de connexion manquante : définir ConnectionStrings:Default (voir le README).");
+        "Missing connection string: set ConnectionStrings:Default (see the README).");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
 builder.Services.AddControllers();
@@ -16,7 +16,7 @@ builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
-// Au démarrage : crée ou met à jour le schéma (migrations), puis charge les données de démo si la base est vide.
+// On startup: create or update the schema (migrations), then load the demo data if the database is empty.
 await using (var scope = app.Services.CreateAsyncScope())
 {
     var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -26,7 +26,7 @@ await using (var scope = app.Services.CreateAsyncScope())
 
 app.MapControllers();
 
-// Documentation interactive de l'API pour la tester depuis le navigateur : http://localhost:5080/scalar
+// Interactive API documentation to try the endpoints from the browser: http://localhost:5080/scalar
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();

@@ -10,7 +10,7 @@ const jakarta = Plus_Jakarta_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Suivi de projets et de tâches",
+  title: { default: "Suivi de projets et de tâches", template: "%s · Suivi de projets" },
   description: "Outil interne de suivi des projets et des tâches de l'agence.",
 };
 

@@ -14,7 +14,7 @@ On avance phase par phase, sans tout implémenter d'un coup.
 
 ## Jalon B — Frontend (Next.js)
 
-- [ ] **P4 Socle front** (`feat/front-foundation`) : Next.js, Tailwind, tokens de design, layout, client `lib/api/`
+- [x] **P4 Socle front** (`feat/front-foundation`) : Next.js, Tailwind, tokens de design, layout, client `lib/api/`
 - [ ] **P5 Pages projets** (`feat/front-projects`) : accueil, création, modification, suppression
 - [ ] **P6 Pages tâches** (`feat/front-tasks`) : liste groupée par statut, ajout, modification, suppression, changement de statut
 - [ ] **P7 Finitions** (`docs/readme`) : README complet (lancement, choix techniques), vérification mobile et accessibilité

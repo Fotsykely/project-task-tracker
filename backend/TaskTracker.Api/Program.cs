@@ -1,5 +1,5 @@
-using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
+using Scalar.AspNetCore;
 using TaskTracker.Api.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,10 +11,8 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
         "Chaîne de connexion manquante : définir ConnectionStrings:Default (voir le README).");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-
-// Le statut d'une tâche circule en texte ("InProgress") plutôt qu'en nombre dans le JSON.
-builder.Services.AddControllers()
-    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
+builder.Services.AddControllers();
+builder.Services.AddOpenApi();
 
 var app = builder.Build();
 
@@ -27,5 +25,12 @@ await using (var scope = app.Services.CreateAsyncScope())
 }
 
 app.MapControllers();
+
+// Documentation interactive de l'API pour la tester depuis le navigateur : http://localhost:5080/scalar
+if (app.Environment.IsDevelopment())
+{
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+}
 
 app.Run();

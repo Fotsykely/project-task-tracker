@@ -37,6 +37,18 @@ dotnet run                  # http://localhost:5080
 
 Au démarrage, l'API applique les migrations puis, si la base ne contient aucun projet, charge les données de démonstration (3 projets, 8 tâches). Relancer l'API ne crée pas de doublons.
 
+## Tester l'API
+
+Avec l'API lancée (`dotnet run`), ouvrir **http://localhost:5080/scalar** : la documentation interactive (Scalar) liste tous les endpoints et permet de les essayer depuis le navigateur. La description OpenAPI brute est sur `/openapi/v1.json`. Ces deux adresses n'existent qu'en développement.
+
+Avec `curl` :
+
+```bash
+curl http://localhost:5080/api/projects
+curl -X POST http://localhost:5080/api/projects -H "Content-Type: application/json" -d '{"name":"Mon projet"}'
+curl -X POST http://localhost:5080/api/projects/1/tasks -H "Content-Type: application/json" -d '{"title":"Ma tâche","status":"InProgress","dueDate":"2026-12-31"}'
+```
+
 ## API
 
 | Méthode | URL | Rôle |

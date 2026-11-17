@@ -10,6 +10,7 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
         "Chaîne de connexion manquante : définir ConnectionStrings:Default (voir le README).");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
+builder.Services.AddControllers();
 
 var app = builder.Build();
 
@@ -20,5 +21,7 @@ await using (var scope = app.Services.CreateAsyncScope())
     await db.Database.MigrateAsync();
     await DemoDataSeeder.SeedAsync(db);
 }
+
+app.MapControllers();
 
 app.Run();

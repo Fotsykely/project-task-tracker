@@ -1,12 +1,10 @@
 import "server-only";
+import type { FieldErrors } from "./types";
 
 // The only place that talks HTTP to the ASP.NET Core API. Pages and Server Actions call the
 // functions of projects.ts and tasks.ts and never see fetch or status codes.
 
 const REQUEST_TIMEOUT_MS = 5000;
-
-// Messages per form field, with the field names in camelCase: { name: ["Le nom est obligatoire."] }
-export type FieldErrors = Record<string, string[]>;
 
 export class ApiValidationError extends Error {
   constructor(readonly fieldErrors: FieldErrors) {

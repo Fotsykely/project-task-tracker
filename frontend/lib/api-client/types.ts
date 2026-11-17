@@ -28,13 +28,16 @@ export interface Task {
 }
 
 // Request bodies. An empty description is turned into "no description" by the API.
-export interface ProjectInput {
+export type ProjectInput = {
   name: string;
   description: string;
-}
+};
 
-export interface TaskInput {
+export type TaskInput = {
   title: string;
   status: TaskStatus;
   dueDate: string | null;
-}
+};
+
+// Validation messages per form field, with camelCase field names: { name: ["Le nom est obligatoire."] }
+export type FieldErrors = Record<string, string[]>;

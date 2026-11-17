@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.EntityFrameworkCore;
 using TaskTracker.Api.Data;
 
@@ -10,7 +11,10 @@ var connectionString = builder.Configuration.GetConnectionString("Default")
         "Chaîne de connexion manquante : définir ConnectionStrings:Default (voir le README).");
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseNpgsql(connectionString));
-builder.Services.AddControllers();
+
+// Le statut d'une tâche circule en texte ("InProgress") plutôt qu'en nombre dans le JSON.
+builder.Services.AddControllers()
+    .AddJsonOptions(options => options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter()));
 
 var app = builder.Build();
 

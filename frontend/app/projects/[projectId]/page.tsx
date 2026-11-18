@@ -1,6 +1,7 @@
 import { Pencil } from "lucide-react";
 import { ButtonLink } from "@/components/button";
 import { ConfirmDelete } from "@/components/confirm-delete";
+import { ProgressBar } from "@/components/progress-bar";
 import { getProject } from "@/lib/api-client/projects";
 import { listTasks } from "@/lib/api-client/tasks";
 import { TASK_STATUSES } from "@/lib/api-client/types";
@@ -24,6 +25,8 @@ export default async function ProjectPage(props: PageProps<"/projects/[projectId
     tasks: tasks.filter((task) => task.status === status),
   })).filter((group) => group.tasks.length > 0);
 
+  const doneCount = tasks.filter((task) => task.status === "Done").length;
+
   return (
     <>
       <header className="mb-8 flex flex-col gap-4">
@@ -34,23 +37,13 @@ export default async function ProjectPage(props: PageProps<"/projects/[projectId
           </p>
           {project.description && <p className="mt-3 whitespace-pre-line break-words">{project.description}</p>}
 
-          {/* Progress bar showing the percentage of tasks that are done. */}
-          {
-            tasks.length > 0 && (
-              <>
-                <p> 
-                  <strong className="font-semibold">{tasks.filter((task) => task.status === "Done").length}</strong> /{" "}
-                  <strong className="font-semibold">{tasks.length}</strong> tâches terminées
-                </p>
-                <div className="mt-4 h-2 w-full overflow-hidden rounded-full bg-border">
-                  <div
-                    className="h-full bg-status-done-bg transition-all"
-                    style={{ width: `${(tasks.filter((task) => task.status === "Done").length / tasks.length) * 100}%` }}
-                  />
-                </div>
-              </>
-            )
-          }
+          {tasks.length > 0 && (
+            <ProgressBar value={doneCount} max={tasks.length} tone="success" className="mt-4">
+              <strong className="font-semibold">{doneCount}</strong> /{" "}
+              <strong className="font-semibold">{tasks.length}</strong>{" "}
+              {tasks.length > 1 ? "tâches terminées" : "tâche terminée"}
+            </ProgressBar>
+          )}
         </div>
         <div className="flex flex-wrap gap-3">
           <ButtonLink href={`/projects/${project.id}/edit`} variant="secondary">

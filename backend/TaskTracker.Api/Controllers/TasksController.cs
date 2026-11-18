@@ -27,7 +27,7 @@ public class TasksController(AppDbContext db) : ControllerBase
     }
 
     [HttpPost("projects/{projectId:int}/tasks")]
-    public async Task<ActionResult<TaskDto>> Create(int projectId, TaskRequestDto request, CancellationToken cancellationToken)
+    public async Task<ActionResult<TaskDto>> Create(int projectId, CreateTaskDto request, CancellationToken cancellationToken)
     {
         if (!await ProjectExists(projectId, cancellationToken))
             return NotFound();
@@ -53,7 +53,7 @@ public class TasksController(AppDbContext db) : ControllerBase
     }
 
     [HttpPut("tasks/{id:int}")]
-    public async Task<ActionResult<TaskDto>> Update(int id, TaskRequestDto request, CancellationToken cancellationToken)
+    public async Task<ActionResult<TaskDto>> Update(int id, UpdateTaskDto request, CancellationToken cancellationToken)
     {
         var task = await db.Tasks.FindAsync([id], cancellationToken);
         if (task is null)

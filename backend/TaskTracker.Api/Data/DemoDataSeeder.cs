@@ -21,8 +21,8 @@ public static class DemoDataSeeder
                 Tasks =
                 [
                     new() { Title = "Maquettes de la page d'accueil", Status = ProjectTaskStatus.Done },
-                    new() { Title = "Intégration responsive", Status = ProjectTaskStatus.InProgress, DueDate = today.AddDays(7) },
-                    new() { Title = "Rédaction des mentions légales", DueDate = today.AddDays(14) },
+                    new() { Title = "Intégration responsive", Status = ProjectTaskStatus.InProgress, Priority = ProjectTaskPriority.High, DueDate = today.AddDays(7) },
+                    new() { Title = "Rédaction des mentions légales", Priority = ProjectTaskPriority.Low, DueDate = today.AddDays(14) },
                 ],
             },
             new Project
@@ -32,7 +32,7 @@ public static class DemoDataSeeder
                 Tasks =
                 [
                     new() { Title = "Choisir les produits à mettre en avant", Status = ProjectTaskStatus.Done },
-                    new() { Title = "Rédiger les textes", Status = ProjectTaskStatus.InProgress, DueDate = today.AddDays(3) },
+                    new() { Title = "Rédiger les textes", Status = ProjectTaskStatus.InProgress, Priority = ProjectTaskPriority.High, DueDate = today.AddDays(3) },
                     new() { Title = "Programmer l'envoi", DueDate = today.AddDays(10) },
                 ],
             },
@@ -41,8 +41,8 @@ public static class DemoDataSeeder
                 Name = "Identité visuelle Café Lumière",
                 Tasks =
                 [
-                    new() { Title = "Proposer trois logos", DueDate = today.AddDays(5) },
-                    new() { Title = "Valider la palette de couleurs" },
+                    new() { Title = "Proposer trois logos", Priority = ProjectTaskPriority.High, DueDate = today.AddDays(5) },
+                    new() { Title = "Valider la palette de couleurs", Priority = ProjectTaskPriority.Low },
                 ],
             });
 

@@ -36,6 +36,7 @@ public class TasksController(AppDbContext db) : ControllerBase
         {
             Title = request.Title!,
             Status = request.Status,
+            Priority = request.Priority,
             DueDate = request.DueDate,
             ProjectId = projectId,
         };
@@ -61,6 +62,7 @@ public class TasksController(AppDbContext db) : ControllerBase
 
         task.Title = request.Title!;
         task.Status = request.Status;
+        task.Priority = request.Priority;
         task.DueDate = request.DueDate;
         await db.SaveChangesAsync(cancellationToken);
 
@@ -78,5 +80,5 @@ public class TasksController(AppDbContext db) : ControllerBase
         db.Projects.AnyAsync(p => p.Id == projectId, cancellationToken);
 
     private static TaskDto ToDto(ProjectTask task) =>
-        new(task.Id, task.Title, task.Status, task.DueDate, task.ProjectId);
+        new(task.Id, task.Title, task.Status, task.Priority, task.DueDate, task.ProjectId);
 }

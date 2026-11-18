@@ -31,6 +31,15 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
                 .WithMany(p => p.Tasks)
                 .HasForeignKey(t => t.ProjectId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            // Stored as text like the status. The database default gives existing rows "Normal" when the
+            // column is added. The sentinel tells EF that only "Normal" means "not set": without it, EF
+            // would treat "Low" (the enum's zero value) as not set and silently store "Normal" instead.
+            task.Property(t => t.Priority)
+                .HasConversion<string>()
+                .HasMaxLength(20)
+                .HasDefaultValue(ProjectTaskPriority.Normal)
+                .HasSentinel(ProjectTaskPriority.Normal);
         });
     }
 }

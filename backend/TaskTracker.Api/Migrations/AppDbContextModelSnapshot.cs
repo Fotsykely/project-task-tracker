@@ -60,6 +60,13 @@ namespace TaskTracker.Api.Migrations
                     b.Property<DateOnly?>("DueDate")
                         .HasColumnType("date");
 
+                    b.Property<string>("Priority")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasMaxLength(20)
+                        .HasColumnType("character varying(20)")
+                        .HasDefaultValue("Normal");
+
                     b.Property<int>("ProjectId")
                         .HasColumnType("integer");
 

@@ -21,6 +21,10 @@ public abstract class TaskRequestDto
     [EnumDataType(typeof(ProjectTaskStatus), ErrorMessage = "Le statut est invalide.")]
     public ProjectTaskStatus Status { get; set; } = ProjectTaskStatus.Todo;
 
+    // Sent as text: "Low", "Normal" or "High". Defaults to "Normal" when omitted.
+    [EnumDataType(typeof(ProjectTaskPriority),ErrorMessage = "La priorité est invalide.")]
+    public ProjectTaskPriority Priority { get; set; } = ProjectTaskPriority.Normal;
+
     // Optional, formatted as "2026-12-31". Declared by each subclass because the rules differ.
     public abstract DateOnly? DueDate { get; set; }
 }
@@ -45,4 +49,10 @@ public sealed class NotInThePastAttribute : ValidationAttribute
         value is not DateOnly date || date >= DateOnly.FromDateTime(DateTime.Today);
 }
 
-public record TaskDto(int Id, string Title, ProjectTaskStatus Status, DateOnly? DueDate, int ProjectId);
+public record TaskDto(
+    int Id,
+    string Title,
+    ProjectTaskStatus Status,
+    ProjectTaskPriority Priority,
+    DateOnly? DueDate,
+    int ProjectId);

@@ -8,6 +8,7 @@ public class ProjectTask
     public int Id { get; set; }
     public required string Title { get; set; }
     public ProjectTaskStatus Status { get; set; } = ProjectTaskStatus.Todo;
+    public ProjectTaskPriority Priority { get; set; } = ProjectTaskPriority.Normal;
 
     // DateOnly: a due date is a day, not an instant (no time zone to deal with).
     public DateOnly? DueDate { get; set; }

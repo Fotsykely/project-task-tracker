@@ -36,6 +36,26 @@ Aucune valeur hexadécimale en dur dans les composants : tout passe par ces vari
 | En cours | `#DBEAFE` | `#1D4ED8` |
 | Terminée | `#DCFCE7` | `#166534` |
 
+**Priorités** (pastille avec **libellé** et **icône**, jamais la couleur seule) :
+
+| Priorité | Fond | Texte | Icône |
+|---|---|---|---|
+| Basse | `#CCFBF1` | `#115E59` | flèche vers le bas |
+| Normale | `#EEEDFC` | `#4A3FC0` | tiret |
+| Haute | `#FEE2E2` | `#991B1B` | flèche vers le haut |
+
+Variables `--color-priority-{low|normal|high}-{bg|fg}`. Teintes volontairement différentes de celles des statuts pour ne pas confondre les deux pastilles.
+
+**Couleur de la ligne de tâche** : elle suit le **statut**, pas la priorité (la priorité se lit sur sa propre pastille). Une bordure gauche de 4 px reprend la couleur du texte de la pastille de statut, et le fond est une teinte plus claire que la pastille, pour que la pastille de priorité reste visible dessus :
+
+| Statut | Bande | Fond (`--color-status-*-row`) |
+|---|---|---|
+| À faire | `#475569` | `#FFFFFF` |
+| En cours | `#1D4ED8` | `#F5F9FF` |
+| Terminée | `#166534` | `#F0FDF4` |
+
+La couleur est décorative : le statut est aussi écrit dans l'en-tête du groupe et dans le sélecteur de la ligne. Le texte « En retard » en `--color-destructive` garde un contraste d'au moins 4,5:1 sur ces fonds.
+
 Échéance dépassée : texte `--color-destructive` + libellé « En retard ».
 
 ## Typographie

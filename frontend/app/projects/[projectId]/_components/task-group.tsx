@@ -7,13 +7,7 @@ import { TaskRow } from "./task-row";
 export function TaskGroup({ status, tasks }: { status: TaskStatus; tasks: Task[] }) {
   const headingId = `tasks-${status}`;
 
-  // Filtering task group by due date ascending order, with the null due dates at the end of the list.
-  tasks.sort((a, b) => {
-    if (a.dueDate === null && b.dueDate === null) return 0;
-    if (a.dueDate === null) return 1;
-    if (b.dueDate === null) return -1;
-    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
-  })
+  const sortedTasks = tasks.toSorted(compareByDueDate);
 
   return (
     <section aria-labelledby={headingId}>
@@ -22,10 +16,19 @@ export function TaskGroup({ status, tasks }: { status: TaskStatus; tasks: Task[]
         <span className="text-sm text-muted-foreground">{tasks.length}</span>
       </h3>
       <ul className="flex flex-col gap-2">
-        {tasks.map((task) => (
+        {sortedTasks.map((task) => (
           <TaskRow key={task.id} task={task} />
         ))}
       </ul>
     </section>
   );
+}
+
+// Earliest due date first, tasks without a due date last. Dates are "YYYY-MM-DD" strings,
+// so comparing them as text gives the chronological order. Equal dates keep their original order.
+function compareByDueDate(a: Task, b: Task): number {
+  if (a.dueDate === b.dueDate) return 0;
+  if (a.dueDate === null) return 1;
+  if (b.dueDate === null) return -1;
+  return a.dueDate.localeCompare(b.dueDate);
 }

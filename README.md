@@ -78,7 +78,7 @@ Une ressource inconnue répond `404`. Une saisie invalide répond `400` avec les
 ```
 
 Corps d'un projet : `{ "name": "...", "description": "..." }` (description facultative).
-Corps d'une tâche : `{ "title": "...", "status": "Todo | InProgress | Done", "dueDate": "2026-12-31" }` (statut et échéance facultatifs).
+Corps d'une tâche : `{ "title": "...", "status": "Todo | InProgress | Done", "priority": "Low | Normal | High", "dueDate": "2026-12-31" }` (statut, priorité et échéance facultatifs ; priorité `Normal` par défaut).
 
 ## Structure
 
@@ -86,7 +86,7 @@ Corps d'une tâche : `{ "title": "...", "status": "Todo | InProgress | Done", "d
 backend/TaskTracker.Api/
 ├── Controllers/   ProjectsController, TasksController   (routes HTTP)
 ├── Dtos/          corps des requêtes et réponses, avec la validation
-├── Entities/      Project, ProjectTask, ProjectTaskStatus
+├── Entities/      Project, ProjectTask, ProjectTaskStatus, ProjectTaskPriority
 ├── Data/          AppDbContext (mapping EF Core), DemoDataSeeder
 ├── Migrations/    schéma de la base, généré par EF Core
 └── Program.cs     configuration et démarrage

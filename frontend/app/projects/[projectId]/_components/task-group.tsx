@@ -7,6 +7,14 @@ import { TaskRow } from "./task-row";
 export function TaskGroup({ status, tasks }: { status: TaskStatus; tasks: Task[] }) {
   const headingId = `tasks-${status}`;
 
+  // Filtering task group by due date ascending order, with the null due dates at the end of the list.
+  tasks.sort((a, b) => {
+    if (a.dueDate === null && b.dueDate === null) return 0;
+    if (a.dueDate === null) return 1;
+    if (b.dueDate === null) return -1;
+    return new Date(a.dueDate).getTime() - new Date(b.dueDate).getTime();
+  })
+
   return (
     <section aria-labelledby={headingId}>
       <h3 id={headingId} className="mb-2 flex items-center gap-2">

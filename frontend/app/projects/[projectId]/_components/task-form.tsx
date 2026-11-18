@@ -4,11 +4,11 @@ import { useActionState } from "react";
 import { ButtonLink } from "@/components/button";
 import { FormError, InputField, SelectField } from "@/components/field";
 import { SubmitButton } from "@/components/submit-button";
-import { TASK_STATUSES } from "@/lib/api-client/types";
+import { TASK_STATUSES, TASK_PRIORITIES } from "@/lib/api-client/types";
 import { INITIAL_FORM_STATE, type FormState } from "@/lib/form-state";
-import { STATUS_LABELS } from "@/lib/format";
+import { STATUS_LABELS, PRIORITY_LABELS } from "@/lib/format";
 
-type TaskFormValues = { title: string; status: string; dueDate: string };
+type TaskFormValues = { title: string; status: string; dueDate: string; priority: string };
 
 type TaskFormProps = {
   action: (previousState: FormState, formData: FormData) => Promise<FormState>;
@@ -41,6 +41,13 @@ export function TaskForm({ action, initialValues, submitLabel, cancelHref }: Tas
         {TASK_STATUSES.map((status) => (
           <option key={status} value={status}>
             {STATUS_LABELS[status]}
+          </option>
+        ))}
+      </SelectField>
+      <SelectField label="Priorité" name="priority" defaultValue={values.priority} errors={fieldErrors.priority}>
+        {TASK_PRIORITIES.map((priority) => (
+          <option key={priority} value={priority}>
+            {PRIORITY_LABELS[priority]}
           </option>
         ))}
       </SelectField>

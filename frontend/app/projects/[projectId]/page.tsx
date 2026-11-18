@@ -66,7 +66,7 @@ export default async function ProjectPage(props: PageProps<"/projects/[projectId
         </h2>
         <TaskForm
           action={createTaskAction.bind(null, project.id)}
-          initialValues={{ title: "", status: "Todo", dueDate: "" }}
+          initialValues={{ title: "", status: "Todo", dueDate: "", priority: "Normal" }}
           submitLabel="Ajouter la tâche"
         />
       </section>

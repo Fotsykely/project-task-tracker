@@ -4,6 +4,7 @@ import { ConfirmDelete } from "@/components/confirm-delete";
 import type { Task } from "@/lib/api-client/types";
 import { formatDate, isOverdue } from "@/lib/format";
 import { changeTaskStatusAction, deleteTaskAction } from "../task-actions";
+import { PriorityBadge } from "./priority-badge";
 import { TaskStatusSelect } from "./task-status-select";
 
 // One task: title and due date on the left; status, edit and delete on the right
@@ -15,6 +16,9 @@ export function TaskRow({ task }: { task: Task }) {
     <li className="flex flex-col gap-3 rounded-lg border border-border bg-surface p-4 sm:flex-row sm:items-center sm:justify-between">
       <div className="min-w-0">
         <p className="break-words font-medium">{task.title}</p>
+        <div className="mt-1 flex items-center gap-2">
+          <PriorityBadge priority={task.priority} />
+        </div>
         {task.dueDate && <DueDate dueDate={task.dueDate} overdue={isOverdue(task.dueDate, task.status)} />}
       </div>
 

@@ -4,6 +4,9 @@
 export const TASK_STATUSES = ["Todo", "InProgress", "Done"] as const;
 export type TaskStatus = (typeof TASK_STATUSES)[number];
 
+export const TASK_PRIORITIES = ["Low", "Normal", "High"] as const;
+export type TaskPriority = (typeof TASK_PRIORITIES)[number];
+
 export interface ProjectSummary {
   id: number;
   name: string;
@@ -23,6 +26,7 @@ export interface Task {
   id: number;
   title: string;
   status: TaskStatus;
+  priority: TaskPriority;
   dueDate: string | null; // "2026-12-31"
   projectId: number;
 }
@@ -36,6 +40,7 @@ export type ProjectInput = {
 export type TaskInput = {
   title: string;
   status: TaskStatus;
+  priority: TaskPriority;
   dueDate: string | null;
 };
 

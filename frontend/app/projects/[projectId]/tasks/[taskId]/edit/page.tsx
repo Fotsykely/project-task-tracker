@@ -20,7 +20,12 @@ export default async function EditTaskPage(props: PageProps<"/projects/[projectI
       <h1 className="mb-6 text-2xl font-semibold">Modifier la tâche</h1>
       <TaskForm
         action={updateTaskAction.bind(null, projectNumber, task.id)}
-        initialValues={{ title: task.title, status: task.status, dueDate: task.dueDate ?? "" }}
+        initialValues={{
+          title: task.title,
+          status: task.status,
+          priority: task.priority,
+          dueDate: task.dueDate ?? "",
+        }}
         submitLabel="Enregistrer"
         cancelHref={`/projects/${projectNumber}`}
       />

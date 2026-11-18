@@ -3,14 +3,20 @@
 import { redirect } from "next/navigation";
 import { ApiNotFoundError } from "@/lib/api-client/client";
 import { createTask, deleteTask, getTask, updateTask } from "@/lib/api-client/tasks";
-import { TASK_STATUSES, type TaskInput, type TaskStatus } from "@/lib/api-client/types";
+import {
+  TASK_PRIORITIES,
+  TASK_STATUSES,
+  type TaskInput,
+  type TaskPriority,
+  type TaskStatus,
+} from "@/lib/api-client/types";
 import { readText } from "@/lib/form-data";
 import { toFormState } from "@/lib/form-errors";
 import type { FormState, FormValues } from "@/lib/form-state";
 import { revalidateAllPages } from "@/lib/revalidate";
 
 // Form field names, used to keep only the API messages that belong to this form.
-const TASK_FIELDS = ["title", "status", "dueDate"] as const;
+const TASK_FIELDS = ["title", "status", "dueDate", "priority"] as const;
 
 // Same shape as the project actions: read the form, call the API client, then redirect or return errors.
 
@@ -51,12 +57,12 @@ export async function updateTaskAction(
   redirect(`/projects/${projectId}`);
 }
 
-// The API replaces the whole task on update, so the current title and due date are read first.
+// The API replaces the whole task on update, so the current title, priority and due date are read first.
 export async function changeTaskStatusAction(taskId: number, formData: FormData): Promise<void> {
   const task = await getTask(taskId);
   const status = parseTaskStatus(readText(formData, "status")) ?? task.status;
 
-  await updateTask(taskId, { title: task.title, status, dueDate: task.dueDate });
+  await updateTask(taskId, { title: task.title, status, dueDate: task.dueDate, priority: task.priority });
   revalidateAllPages();
 }
 
@@ -76,6 +82,7 @@ function readTaskValues(formData: FormData): FormValues {
     title: readText(formData, "title"),
     status: readText(formData, "status"),
     dueDate: readText(formData, "dueDate"),
+    priority: readText(formData, "priority"),
   };
 }
 
@@ -85,9 +92,14 @@ function toTaskInput(values: FormValues): TaskInput {
     // The select only offers valid statuses; anything else can only come from a hand-made request.
     status: parseTaskStatus(values.status) ?? "Todo",
     dueDate: values.dueDate === "" ? null : values.dueDate,
+    priority: parseTaskPriority(values.priority) ?? "Normal",
   };
 }
 
 function parseTaskStatus(rawStatus: string): TaskStatus | undefined {
   return TASK_STATUSES.find((status) => status === rawStatus);
+}
+
+function parseTaskPriority(rawPriority: string): TaskPriority | undefined {
+  return TASK_PRIORITIES.find((priority) => priority === rawPriority);
 }

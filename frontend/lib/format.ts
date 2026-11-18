@@ -1,10 +1,16 @@
-import type { TaskStatus } from "./api-client/types";
+import type { TaskStatus, TaskPriority } from "./api-client/types";
 
 // Texts shown to users stay in French; identifiers and comments stay in English.
 export const STATUS_LABELS: Record<TaskStatus, string> = {
   Todo: "À faire",
   InProgress: "En cours",
   Done: "Terminée",
+};
+
+export const PRIORITY_LABELS: Record<TaskPriority, string> = {
+  Low: "Basse",
+  Normal: "Normale",
+  High: "Haute",
 };
 
 const dateFormatter = new Intl.DateTimeFormat("fr-FR", { dateStyle: "medium" });
